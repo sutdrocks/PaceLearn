@@ -1,0 +1,247 @@
+<!doctype html>
+<html class="no-js" lang="zxx">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Ararat</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- <link rel="manifest" href="site.webmanifest"> -->
+    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.png">
+    <!-- Place favicon.ico in the root directory -->
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/themify-icons.css">
+    <link rel="stylesheet" href="css/nice-select.css">
+    <link rel="stylesheet" href="css/flaticon.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/slicknav.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="css/Chart.min.css">
+    <!-- <link rel="stylesheet" href="css/responsive.css"> -->
+<style>
+.h1 {
+  font-size: 30px;
+  padding: 5px 15px 5px 15px;
+}
+.hide{
+  display: none;
+}
+.show{
+  display: block;
+}
+.container-fluid {
+    width: 500px;
+    height: 300px;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+   Chart.platform.disableCSSInjection = true;
+</style>
+</head>
+
+<body>
+    <!--[if lte IE 9]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+        <![endif]-->
+
+    <!-- header-start -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">
+  <img src="img/logo.png" width="210" height="90" alt="">
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Dashboard <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Assignment</a>
+      </li>
+    </ul>
+    <ul class="navbar-nav ml-auto">
+     <a class="navbar-text">
+      Welcome , 101.     
+
+      <img src="img/icon/avatar.png" width="40" height="40" alt="" class="rounded-circle" hspace="10">
+          </a>
+    </ul>
+
+  </div>
+</nav>
+    <header>
+       
+    </header>
+    <!-- header-end -->
+
+    <!-- slider_area_start -->
+<body>
+    <div class="d-flex" id="wrapper">
+    <div class="bg-light border-right" id="sidebar-wrapper">
+      <div class="sidebar-heading"><h1 class="h1"><strong>Performance</h1></div>
+      <div class="list-group list-group-flush">
+        <button type="button" class="btn1" onclick="assignment1()"><a href="#" class="list-group-item list-group-item-action bg-light"> Assignment 1</a></button>
+        <button type="button" class="btn2" onclick="assignment2()"><a href="#" class="list-group-item list-group-item-action bg-light">Assignment 2</a></button>
+      </div>
+    </div>
+    <div class="assignment-1 hide">
+        <div class="container-fluid">
+        <h1 class="mt-4">Assignment 1</h1>
+        <canvas id="Chart1" width="500px" height="300px"></canvas>
+    </div>
+    </div>
+    <div class="assignment-2 hide">
+    <div class="container-fluid">
+        <h1 class="mt-4">Assignment 2</h1>
+        <canvas id="Chart2" width="500px" height="300px"></canvas>
+      </div>
+     </div>
+    </div>
+   </div>
+</body>
+
+    <!-- footer_end -->
+
+
+    <!-- JS here -->
+    <!-- bootstrap js -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="js/vendor/modernizr-3.5.0.min.js"></script>
+    <script src="js/vendor/jquery-1.12.4.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/isotope.pkgd.min.js"></script>
+    <script src="js/ajax-form.js"></script>
+    <script src="js/waypoints.min.js"></script>
+    <script src="js/jquery.counterup.min.js"></script>
+    <script src="js/imagesloaded.pkgd.min.js"></script>
+    <script src="js/scrollIt.js"></script>
+    <script src="js/jquery.scrollUp.min.js"></script>
+    <script src="js/wow.min.js"></script>
+    <script src="js/nice-select.min.js"></script>
+    <script src="js/jquery.slicknav.min.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/plugins.js"></script>
+
+    <!--contact js-->
+    <script src="js/contact.js"></script>
+    <script src="js/jquery.ajaxchimp.min.js"></script>
+    <script src="js/jquery.form.js"></script>
+    <script src="js/jquery.validate.min.js"></script>
+    <script src="js/mail-script.js"></script>
+
+    <script src="js/main.js"></script>
+    
+    <!--chart.js-->
+    <script src="js/Chart.js"></script>
+    
+    <script>
+    function assignment1() {
+    $(".assignment-1").css("display", "block");
+    $(".assignment-2").css("display", "none");
+
+    }
+    
+    function assignment2() {
+    $(".assignment-2").css("display", "block");
+    $(".assignment-1").css("display", "none");
+
+    }
+    </script>
+    <script>
+    var ctx = document.getElementById('Chart1').getContext('2d');
+    var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Q1', 'Q2', 'Q3', 'Q4', 'Q5', 'Q6'],
+        datasets: [{
+            label: '# of Votes',
+            data: [12, 19, 3, 5, 2, 3],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+</script>
+<script>
+    var ctx = document.getElementById('Chart2').getContext('2d');
+    var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        datasets: [{
+            label: '# of Votes',
+            data: [12, 19, 3, 5, 2, 3],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+</script>
+
+</body>
+
+</html>
