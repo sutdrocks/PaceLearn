@@ -1,0 +1,187 @@
+<!doctype html>
+<html class="no-js" lang="zxx">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Ararat</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- <link rel="manifest" href="site.webmanifest"> -->
+    <link rel="shortcut icon" type="image/x-icon" href="static/img/favicon.png">
+    <!-- Place favicon.ico in the root directory -->
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="static/css/Chart.min.css">
+    <!-- <link rel="stylesheet" href="css/responsive.css"> -->
+
+    <!-- JS here -->
+    <!-- bootstrap js -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="static/js/jquery.slicknav.min.js"></script>
+    <script src="static/js/jquery.magnific-popup.min.js"></script>
+    <script src="static/js/plugins.js"></script>
+
+    <!--contact js-->
+    <script src="static/js/main.js"></script>
+    
+    <!--chart.js-->
+    <script src="static/js/Chart.js"></script>
+
+    <style>
+    .h1 {
+      font-size: 30px;
+      padding: 5px 15px 5px 15px;
+    }
+    .hide{
+      display: none;
+    }
+    .show{
+      display: block;
+    }
+    .container-fluid {
+        width: 500px;
+        height: 300px;
+        padding-right: 15px;
+        padding-left: 15px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+    #loginButton{
+        border-radius: 5px;
+        border:none;
+    }
+       Chart.platform.disableCSSInjection = true;
+    </style>
+</head>
+
+<body>
+
+    <!-- header-start -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">
+      <img src="static/img/logo.png" width="210" height="90" alt="">
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link">Dashboard <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <!-- <a class="nav-link" href="#">Assignment</a> -->
+            <form action="http://localhost:5000/quiz" method="POST">
+                <input class="nav-link" id="loginButton" type="submit" name="submit" value="Assignment"></input>
+            </form>
+          </li>
+        </ul>
+
+        <ul class="navbar-nav ml-auto">
+         <a class="navbar-text">
+          Welcome , {{ result["Name"] }}.     
+
+          <img src="static/img/icon/avatar.png" width="40" height="40" alt="" class="rounded-circle" hspace="10">
+              </a>
+        </ul>
+
+      </div>
+    </nav>
+
+    <!-- slider_area_start -->
+    <body>
+        <div class="d-flex" id="wrapper">
+        <div class="bg-light border-right" id="sidebar-wrapper">
+            <div class="sidebar-heading"><h1 class="h1"><strong>Performance</h1></div>
+                <div class="list-group list-group-flush">
+
+                <!-- Create buttopns -->
+                {% for i in range(1,result_len+1)%}
+                    <button type="button" class="btn1" onclick="assignment{{i}}()"><a href="#" class="list-group-item list-group-item-action bg-light"> Assignment {{i}}</a></button>
+                {% endfor %}
+
+                </div>
+             </div>
+
+
+                <!-- Create Graphs -->
+            {% for i in range(1,result_len+1)%}
+                <div class="assignment-{{i}} hide">
+                    <div class="container-fluid">
+                        <h1 class="mt-4">Assignment {{i}}</h1>
+                        <canvas id="Chart{{i}}" width="500px" height="300px"></canvas>
+                    </div>
+                </div>
+            {% endfor %}
+
+            </div>
+       </div>
+    </body>
+
+    <!-- footer_end -->
+    <script>
+
+    // Create functions
+    {% for i in range(1,result_len+1)%}
+        function assignment{{i}}() {
+
+            // Display none for every element first
+            {% for i in range(1,result_len+1)%}
+                $(".assignment-{{i}}").css("display", "none");
+            {% endfor %}
+
+        // Display only one element
+        $(".assignment-{{i}}").css("display", "block");
+        }
+    {% endfor %}
+
+
+    {% for i in range(1,result_len+1)%}
+        var ctx = document.getElementById('Chart{{i}}').getContext('2d');
+        var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Q1', 'Q2', 'Q3', 'Q4', 'Q5'],
+            datasets: [{
+                label: 'Difficulty of questions',
+                data: {{result["Scores"][i-1]}},
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+    {% endfor %}
+
+</script>
+
+</body>
+
+</html>
