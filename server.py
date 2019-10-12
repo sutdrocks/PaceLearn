@@ -88,7 +88,7 @@ def studentdashboard():
               final_result["Scores"].append(temp_user_df.iloc[i,3])
               
       print(final_result)
-      return render_template("student_dashboard.html",result = final_result, result_len = len(final_result["Scores"]))
+      return render_template("teachers_dashboard.html",result = final_result, result_len = len(final_result["Scores"]))
   
 @app.route('/quiz', methods = ['POST', 'GET'])
 def quiz():
@@ -169,7 +169,7 @@ def quiz():
 
 @app.route('/instructor_dashboard', methods = ['POST', 'GET'])
 def instructordashboard():
-    return render_template("instructor_dashboard.html")
+    return render_template("teachers_dashboard.html")
 
 if __name__ == '__main__':
    app.run()
