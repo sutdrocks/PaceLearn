@@ -23,7 +23,18 @@ prev_start_time = datetime.now().strftime('%H:%M:%S')
 question_difficulty_list = []
 
 # ------------------------- Local functions -------------------------------------------------------------------------
-# Extract databased on question_counter, previous question correct, time taken, return dictionary with everything
+# Extract database question list, return full list of questions with their recorded datas
+def question_extraction_full():
+    full_dict = {}
+    for i in range(0,grammar_questions.shape[0]):
+        temporary_dataframe = grammar_questions.iloc[i, :]
+        # Keys: Questions, Difficulty, Answer, A, B, C, D, Numeric_difficulty
+        temporary_dict = temporary_dataframe.to_dict()
+        full_dict[i] = temporary_dict
+    #print(full_dict.keys())
+    return full_dict
+    
+# Extract databased on question_counter, previous question correct, time taken, return dictionary with everything    
 def question_extraction(counter, correct=1, time_taken=0):
     temporary_dataframe = grammar_questions.iloc[counter, :]
     # Keys: Questions, Difficulty, Answer, A, B, C, D, Numeric_difficulty
@@ -88,7 +99,7 @@ def studentdashboard():
               final_result["Scores"].append(temp_user_df.iloc[i,3])
               
       print(final_result)
-      return render_template("teachers_dashboard.html",result = final_result, result_len = len(final_result["Scores"]))
+      return render_template("student_dashboard.html",result = final_result, result_len = len(final_result["Scores"]))
   
 @app.route('/quiz', methods = ['POST', 'GET'])
 def quiz():
@@ -151,6 +162,7 @@ def quiz():
           temp_df.loc[current_shape[0]+1] = [user_id, number_of_question_correct, max_question, question_difficulty_list]
           temp_df.to_csv(student_data_path, index = False)
           
+
           # Reset data
           alternative_result = {"Name": str(user_id) + " You scored {}/{}".format(number_of_question_correct,max_question), "Scores": []}
           question_counter = 0
@@ -170,6 +182,11 @@ def quiz():
 @app.route('/instructor_dashboard', methods = ['POST', 'GET'])
 def instructordashboard():
     return render_template("teachers_dashboard.html")
+
+@app.route('/questions', methods = ['POST', 'GET'])
+def questions():
+    final_result = question_extraction_full()
+    return render_template("questions.html",result = final_result, result_len= len(final_result.keys()))
 
 if __name__ == '__main__':
    app.run()

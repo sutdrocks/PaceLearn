@@ -118,7 +118,10 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link" href="#">Dashboard</a>
+            <!-- <a class="nav-link" href="#">Dashboard</a> -->
+            <form action="http://localhost:5000/student_dashboard" method="POST">
+                <input class="nav-link" id="loginButton" type="submit" name="submit" value="Dashboard"></input>
+            </form>
           </li>
           <li class="nav-item active">
             <a class="nav-link" href="#">Assignment<span class="sr-only">(current)</span></a>
