@@ -21,6 +21,7 @@ number_of_question_correct = 0
 prev_question_info = {}
 prev_start_time = datetime.now().strftime('%H:%M:%S')
 question_difficulty_list = []
+question_correct_list = []
 
 # ------------------------- Local functions -------------------------------------------------------------------------
 # Extract database question list, return full list of questions with their recorded datas
@@ -35,8 +36,47 @@ def question_extraction_full():
     return full_dict
     
 # Extract databased on question_counter, previous question correct, time taken, return dictionary with everything    
-def question_extraction(counter, correct=1, time_taken=0):
-    temporary_dataframe = grammar_questions.iloc[counter, :]
+def question_extraction(counter, correct=0, time_taken=0,num_dif=1):
+    next_dif = 1
+    # Logic of questions
+    if num_dif == 1:
+        if correct == 0 or time_taken > 20:
+            next_dif = 1
+        else:
+            next_dif = 2
+    elif num_dif == 2:
+        if correct == 0:
+            next_dif = 1
+        elif correct == 1 and time_taken > 20:
+            next_dif = 2
+        else:
+            next_dif = 3
+    elif num_dif == 3:
+        if correct == 0:
+            next_dif = 2
+        elif correct == 1 and time_taken > 20:
+            next_dif = 3
+        else:
+            next_dif = 4
+    elif num_dif == 4:
+        if correct == 0:
+            next_dif = 3
+        elif correct == 1 and time_taken > 20:
+            next_dif = 4
+        else:
+            next_dif = 5
+    else:
+        if correct == 0:
+            next_dif = 4
+        else:
+            next_dif = 5
+    
+    # Filter
+    temporary_dataframe = grammar_questions[grammar_questions["Numeric_difficulty"] == next_dif]
+    # Random
+    temporary_dataframe = temporary_dataframe.sample(5)
+    temporary_dataframe = temporary_dataframe.iloc[0,:]
+#    temporary_dataframe = temporary_dataframe.iloc[counter, :]
     # Keys: Questions, Difficulty, Answer, A, B, C, D, Numeric_difficulty
     temporary_dict = temporary_dataframe.to_dict()
     return temporary_dict
@@ -114,6 +154,7 @@ def quiz():
       global number_of_question_correct
       global prev_start_time
       global question_difficulty_list
+      global question_correct_list
       
       print("Start time previously is", prev_start_time)
       
@@ -128,6 +169,10 @@ def quiz():
           # Correct or incorrect
           marks = check_question_correct(prev_question_info, result["option"])
           number_of_question_correct += marks
+          
+          # Append marks for tracking
+          question_correct_list.append(marks)
+          
           prev_end_time = datetime.strptime(result['end_time'], '%H:%M:%S')
           prev_start_time = datetime.strptime(prev_start_time, '%H:%M:%S')
           
@@ -144,7 +189,13 @@ def quiz():
       except Exception as e:
           print("No results detected previously. Error", e)
           
-      final_result = question_extraction(question_counter)
+      try:
+          print("Extracting next question based on previous question's",marks,"and timing",time_taken_perv_question,"and difficulty of", prev_question_info["Numeric_difficulty"])
+          final_result = question_extraction(question_counter, marks, time_taken_perv_question,prev_question_info["Numeric_difficulty"])
+      except Exception as e:
+          final_result = question_extraction(question_counter)
+          print("Error in loading question", e)
+          
       prev_question_info = final_result
       prev_start_time = datetime.now().strftime('%H:%M:%S')
       
@@ -159,7 +210,7 @@ def quiz():
           # Save the data
           temp_df = pd.read_csv(student_data_path)
           current_shape = temp_df.shape
-          temp_df.loc[current_shape[0]+1] = [user_id, number_of_question_correct, max_question, question_difficulty_list]
+          temp_df.loc[current_shape[0]+1] = [user_id, number_of_question_correct, max_question, question_difficulty_list, question_correct_list]
           temp_df.to_csv(student_data_path, index = False)
           
 
@@ -168,6 +219,8 @@ def quiz():
           question_counter = 0
           number_of_question_correct = 0
           question_difficulty_list = []
+          question_correct_list = []
+          prev_question_info = {}
           
           # User base exist, extract all past scores and display it
           temp_user_df = pd.read_csv(student_data_path)
@@ -181,7 +234,24 @@ def quiz():
 
 @app.route('/instructor_dashboard', methods = ['POST', 'GET'])
 def instructordashboard():
-    return render_template("instructor_dashboard.html")
+    # Extract students data
+    temp_student_df = pd.read_csv(student_data_path)
+    all_students = list(temp_student_df["ID"].unique())
+    
+    # Length of all students
+    student_list_len = len(all_students)
+    
+    # Obtain all questions difficulty per student
+    all_questions_sets = []
+    for student in all_students:
+        t_df = temp_student_df[temp_student_df["ID"] == student]
+        all_questions_sets.append(t_df["past_question"].tolist())
+        
+    question_numbering = []
+    for data in all_questions_sets:
+        question_numbering.append(len(data))
+        
+    return render_template("instructor_dashboard.html", Student = all_students, result_len = student_list_len, question_set = all_questions_sets, question_numbering = question_numbering)
 
 @app.route('/questions', methods = ['POST', 'GET'])
 def questions():

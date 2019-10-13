@@ -106,7 +106,7 @@
                 <div class="list-group list-group-flush">
 
                 <!-- Create buttopns -->
-                {% for i in range(1,result_len+1)%}
+                {% for i in range(0,result_len)%}
                     <button type="button" class="btn1" onclick="Student{{i}}()"><a href="#" class="list-group-item list-group-item-action bg-light"> Student {{i}}</a></button>
                 {% endfor %}
 
@@ -115,14 +115,14 @@
 
 
                 <!-- Create Graphs -->
-            {% for i in range(1,result_len+1)%}
-                <div class="student-{{i}} hide">
+            <!-- {% for i in range(1,result_len+1)%} -->
+<!--                 <div class="student-{{i}} hide">
                     <div class="container-fluid">
                         <h1 class="mt-4">Student {{i}}</h1>
                         <canvas id="Chart{{i}}" width="500px" height="300px"></canvas>
                     </div>
-                </div>
-            {% endfor %}
+                </div> -->
+            <!-- {% endfor %} -->
 
             </div>
        </div>
@@ -132,57 +132,21 @@
     <script>
 
     // Create functions
-    {% for i in range(1,result_len+1)%}
-        function Student{{i}}() {
+    // {% for i in range(1,result_len+1)%}
+    //     function Student{{i}}() {
 
-            // Display none for every element first
-            {% for i in range(1,result_len+1)%}
-                $(".student-{{i}}").css("display", "none");
-            {% endfor %}
+    //         // Display none for every element first
+    //         {% for i in range(1,result_len+1)%}
+    //             $(".student-{{i}}").css("display", "none");
+    //         {% endfor %}
 
-        // Display only one element
-        $(".student-{{i}}").css("display", "block");
-        }
-    {% endfor %}
+    //     // Display only one element
+    //     $(".student-{{i}}").css("display", "block");
+    //     }
+    // {% endfor %}
 
 
-    {% for i in range(1,result_len+1)%}
-        var ctx = document.getElementById('Chart{{i}}').getContext('2d');
-        var myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Q1', 'Q2', 'Q3', 'Q4', 'Q5'],
-            datasets: [{
-                label: 'Difficulty of questions',
-                data: {{result["Scores"][i-1]}},
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            }
-        }
-    });
-    {% endfor %}
+
 
 </script>
 
