@@ -181,7 +181,7 @@ def quiz():
 
 @app.route('/instructor_dashboard', methods = ['POST', 'GET'])
 def instructordashboard():
-    return render_template("teachers_dashboard.html")
+    return render_template("instructor_dashboard.html")
 
 @app.route('/questions', methods = ['POST', 'GET'])
 def questions():

@@ -34,8 +34,12 @@
     <script src="static/js/Chart.js"></script>
 
     <style>
+    .button {
+       background-color: #f8f9fa;
+    }
+    
     .h1 {
-      font-size: 30px;  
+      font-size: 30px;
       padding: 5px 15px 5px 15px;
     }
     .hide{
@@ -45,7 +49,7 @@
       display: block;
     }
     .container-fluid {
-        width: 100%;
+        width: 500px;
         height: 300px;
         padding-right: 15px;
         padding-left: 15px;
@@ -63,7 +67,7 @@
 <body>
 
     <!-- header-start -->
-    <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <a class="navbar-brand" href="#">
       <img src="static/img/logo.png" width="210" height="90" alt="">
       </a>
@@ -72,14 +76,14 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-            <!-- <a class="nav-link">Dashboard</a> -->
-            <form action="http://localhost:5000/instructor_dashboard" method="POST">
-                <input class="nav-link" id="loginButton" type="submit" name="submit" value="Dashboard"></input>
-            </form>
-          </li>
           <li class="nav-item active">
-            <a class="nav-link" href="#">Questions<span class="sr-only">(current)</span></a>
+            <a class="nav-link">Dashboard <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <!-- <a class="nav-link" href="#">Questions</a> -->
+            <form action="http://localhost:5000/questions" method="POST">
+                <input class="nav-link" id="loginButton" type="submit" name="submit" value="Questions"></input>
+            </form>
           </li>
         </ul>
 
@@ -101,26 +105,25 @@
             <div class="sidebar-heading"><h1 class="h1"><strong>Performance</h1></div>
                 <div class="list-group list-group-flush">
 
-                <!-- Create buttons -->
-                {% for i in range(0,result_len)%}
-                    <button type="button" class="btn1" onclick="Question{{i}}()"><a href="#" class="list-group-item list-group-item-action bg-light"> Question {{i}} : {{ result[i]["Difficulty"]}}</a></button>
+                <!-- Create buttopns -->
+                {% for i in range(1,result_len+1)%}
+                    <button type="button" class="btn1" onclick="Student{{i}}()"><a href="#" class="list-group-item list-group-item-action bg-light"> Student {{i}}</a></button>
                 {% endfor %}
 
                 </div>
              </div>
 
 
-                <!-- Create Questions -->
-          <div class="position-fixed">
-            {% for i in range(0,result_len)%}
-                <div class="question-{{i}} hide">
+                <!-- Create Graphs -->
+            {% for i in range(1,result_len+1)%}
+                <div class="student-{{i}} hide">
                     <div class="container-fluid">
-                        <h1 class="mt-4">Question {{i}} : {{ result[i]["Difficulty"]}} </h1>
-                        <h1> {{result[i]["Questions"]}}</h1>
+                        <h1 class="mt-4">Student {{i}}</h1>
+                        <canvas id="Chart{{i}}" width="500px" height="300px"></canvas>
                     </div>
                 </div>
             {% endfor %}
-          </div>
+
             </div>
        </div>
     </body>
@@ -129,17 +132,56 @@
     <script>
 
     // Create functions
-    {% for i in range(0,result_len)%}
-        function Question{{i}}() {
+    {% for i in range(1,result_len+1)%}
+        function Student{{i}}() {
 
             // Display none for every element first
-            {% for i in range(0,result_len)%}
-                $(".question-{{i}}").css("display", "none");
+            {% for i in range(1,result_len+1)%}
+                $(".student-{{i}}").css("display", "none");
             {% endfor %}
 
         // Display only one element
-        $(".question-{{i}}").css("display", "block");
+        $(".student-{{i}}").css("display", "block");
         }
+    {% endfor %}
+
+
+    {% for i in range(1,result_len+1)%}
+        var ctx = document.getElementById('Chart{{i}}').getContext('2d');
+        var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Q1', 'Q2', 'Q3', 'Q4', 'Q5'],
+            datasets: [{
+                label: 'Difficulty of questions',
+                data: {{result["Scores"][i-1]}},
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
     {% endfor %}
 
 </script>
