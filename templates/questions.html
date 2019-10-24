@@ -103,7 +103,7 @@
 
                 <!-- Create buttons -->
                 {% for i in range(0,result_len)%}
-                    <button type="button" class="btn1" onclick="Question{{i}}()"><a href="#" class="list-group-item list-group-item-action bg-light"> Question {{i}} : {{ result[i]["Difficulty"]}}</a></button>
+                    <button type="button" class="btn1" onclick="Question{{i}}()"><a href="#" class="list-group-item list-group-item-action bg-light"> Question {{i}} : {{ result[i]["Difficulty"]}} {{result[i]["Updates"]}}</a></button>
                 {% endfor %}
 
                 </div>
@@ -115,7 +115,7 @@
             {% for i in range(0,result_len)%}
                 <div class="question-{{i}} hide">
                     <div class="container-fluid">
-                        <h1 class="mt-4">Question {{i}} : {{ result[i]["Difficulty"]}} </h1>
+                        <h1 class="mt-4">Question {{i}} : {{ result[i]["Difficulty"]}} {{result[i]["Updates"]}}</h1>
                         <h1> {{result[i]["Questions"]}}</h1>
                     </div>
                 </div>

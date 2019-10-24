@@ -2,6 +2,7 @@
 import pandas as pd
 from flask import Flask, render_template, request, redirect, url_for
 from datetime import datetime
+from clustering import cluster_now
 
 # Read database
 grammar_questions = pd.read_excel("Grammar Questions.xlsx")
@@ -27,6 +28,7 @@ question_correct_list = []
 # Extract database question list, return full list of questions with their recorded datas
 def question_extraction_full():
     full_dict = {}
+    grammar_questions = pd.read_excel("Grammar Questions.xlsx")
     for i in range(0,grammar_questions.shape[0]):
         temporary_dataframe = grammar_questions.iloc[i, :]
         # Keys: Questions, Difficulty, Answer, A, B, C, D, Numeric_difficulty
@@ -255,6 +257,7 @@ def instructordashboard():
 
 @app.route('/questions', methods = ['POST', 'GET'])
 def questions():
+    cluster_now()
     final_result = question_extraction_full()
     return render_template("questions.html",result = final_result, result_len= len(final_result.keys()))
 

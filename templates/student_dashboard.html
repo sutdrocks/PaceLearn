@@ -145,18 +145,19 @@
     {% for i in range(1,result_len+1)%}
         var ctx = document.getElementById('Chart{{i}}').getContext('2d');
         var myChart = new Chart(ctx, {
-        type: 'bar',
+        type: 'line',
         data: {
             labels: ['Q1', 'Q2', 'Q3', 'Q4', 'Q5'],
             datasets: [{
                 label: 'Difficulty of questions',
                 data: {{result["Scores"][i-1]}},
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(0, 0, 0, 0.0)',
+                    // 'rgba(255, 99, 132, 0.2)',
+                    // 'rgba(54, 162, 235, 0.2)',
+                    // 'rgba(255, 206, 86, 0.2)',
+                    // 'rgba(75, 192, 192, 0.2)',
+                    // 'rgba(153, 102, 255, 0.2)',
                 ],
                 borderColor: [
                     'rgba(255, 99, 132, 1)',
@@ -172,7 +173,10 @@
             scales: {
                 yAxes: [{
                     ticks: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        max: 5,
+                        min: 1,
+                        stepSize: 1
                     }
                 }]
             }
