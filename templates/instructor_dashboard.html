@@ -49,8 +49,8 @@
       display: block;
     }
     .container-fluid {
-        width: 500px;
-        height: 300px;
+        width: 100%;
+        height: 400px;
         padding-right: 15px;
         padding-left: 15px;
         margin-right: auto;
@@ -107,7 +107,7 @@
 
                 <!-- Create buttopns -->
                 {% for i in range(1,result_len+1)%}
-                    <button type="button" class="btn1" onclick="Student{{i}}()"><a href="#" class="list-group-item list-group-item-action bg-light"> Student {{i}}</a></button>
+                    <button type="button" class="btn1" onclick="Student{{i}}()"><a href="#" class="list-group-item list-group-item-action bg-light"> Student {{Student[i-1]}}</a></button>
                 {% endfor %}
 
                 </div>
@@ -117,12 +117,14 @@
                 <!-- Create Graphs -->
             {% for i in range(0,result_len)%}
                 {% for r in range(question_numbering[i])%}
-                <div class="student-{{i+1}} hide">
-                    <div class="container-fluid">
-                        <h1 class="mt-4">Student {{i+1}} - Assignment {{r+1}}</h1>
-                        <canvas id="Chart{{i}}/{{r}}" width="500px" height="300px"></canvas>
+                <div class="position-relative">
+                    <div class="student-{{i+1}} hide">
+                        <div class="container-fluid">
+                            <h1 class="mt-4">Student {{Student[i]}} - Assignment {{r+1}}</h1>
+                            <canvas id="Chart{{i}}/{{r}}" width="500px" height="300px"></canvas>
+                        </div>
                     </div>
-                </div>
+                 </div>   
                  {% endfor %}
             {% endfor %}
 
